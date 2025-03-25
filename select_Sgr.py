@@ -73,3 +73,16 @@ def select_Sgr_trailarm(Beta, Lambda, distance):
     Sgrcoord_idx = np.abs(Beta) < 15
 
     return (Sgrtrailarmdist_idx & Sgrcoord_idx)
+
+def select_Sgr(ra, dec, distance):
+    """This function combines stars in both the leading and the trailing arm of the Sgr stream."""
+    
+    Lambda = compute_Lambda(ra, dec)
+    Beta = compute_Beta(ra, dec)
+
+    Sgr_leadarm = select_Sgr_leadarm(Beta, Lambda, distance)
+    Sgr_trailarm = select_Sgr_trailarm(Beta, Lambda, distance)
+
+    Sgr_flag = Sgr_leadarm | Sgr_trailarm
+
+    return Sgr_flag
